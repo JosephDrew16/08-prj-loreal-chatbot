@@ -1,66 +1,101 @@
-/* —— basic reset —— */
+/* Use L’Oréal’s bold black, white, and red palette throughout the page. */
+:root {
+  color-scheme: light;
+  --color-black: #111111;
+  --color-red: #e4002b;
+  --color-muted: #686460;
+  --color-border: #e7e2de;
+  --color-background: #f7f5f3;
+  --color-white: #ffffff;
+}
+
+/* Basic reset */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* —— body + fonts —— */
+/* Pair an expressive serif heading with a clean sans-serif interface. */
 body {
+  min-height: 100vh;
   font-family: "Montserrat", Arial, Helvetica, sans-serif;
-  color: #333;
+  color: var(--color-black);
+  background: var(--color-background);
   display: flex;
   justify-content: center;
 }
 
 .page-wrapper {
-  width: 90%;
-  max-width: 900px;
+  width: min(92%, 900px);
 }
 
-/* header */
+/* Brand header */
 .site-header {
   text-align: center;
-  padding-top: 50px;
+  padding: 38px 0 28px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.brand-logo {
+  display: block;
+  width: min(250px, 65vw);
+  height: auto;
+  margin: 0 auto 24px;
 }
 
 .site-title {
-  font-size: 22px;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(30px, 5vw, 42px);
   font-weight: 500;
-  margin-bottom: 10px;
+  line-height: 1.15;
 }
 
-/* chat window */
+.site-tagline {
+  margin-top: 10px;
+  color: var(--color-muted);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Chat area */
 .chatbox {
-  margin: 40px 0;
+  margin: 30px 0;
+  padding: 22px;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  box-shadow: 0 12px 32px rgb(17 17 17 / 5%);
 }
 
 .chat-window {
-  height: 360px;
-  border: 1px solid #000;
-  padding: 20px;
-  font-size: 18px;
-  line-height: 1.5;
+  min-height: 360px;
+  max-height: 55vh;
+  border: 1px solid var(--color-border);
+  padding: 22px;
+  font-size: 16px;
+  line-height: 1.7;
   overflow-y: auto;
-  background: #fafafa;
+  background: var(--color-background);
   white-space: pre-line;
 }
 
-/* messages */
+/* Messages */
 .msg {
   margin-bottom: 14px;
   line-height: 1.5;
 }
 
 .msg.user {
-  color: #000;
+  color: var(--color-red);
 }
 
 .msg.ai {
-  color: #666666;
+  color: var(--color-black);
 }
 
-/* input row */
+/* Message input */
 .chat-form {
   display: flex;
   gap: 12px;
@@ -70,28 +105,29 @@ body {
 .chat-form input {
   flex: 1;
   padding: 12px;
-  border: 1px solid #ccc;
-  font-size: 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  font: inherit;
+  font-size: 16px;
 }
 
 .chat-form input:focus {
-  outline: 2px solid #000;
+  outline: 2px solid var(--color-red);
   outline-offset: 2px;
 }
 
 .chat-form button {
-  font-size: 18px;
-  background: #000;
-  color: #fff;
+  background: var(--color-red);
+  color: var(--color-white);
   border: none;
-  padding: 12px;
   width: 48px;
   height: 48px;
+  border-radius: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background-color 0.2s ease;
 }
 
 .chat-form button .material-icons {
@@ -99,15 +135,15 @@ body {
 }
 
 .chat-form button:hover {
-  background: #666666;
+  background: #b90023;
 }
 
 .chat-form button:focus {
-  outline: 2px solid #000;
+  outline: 2px solid var(--color-black);
   outline-offset: 2px;
 }
 
-/* visually hidden */
+/* Keep labels available to assistive technology while hiding them visually. */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -120,12 +156,12 @@ body {
   border: 0;
 }
 
-/* footer */
+/* Footer */
 .site-footer {
-  margin: 60px 0 40px;
+  margin: 36px 0 28px;
   text-align: center;
   font-size: 14px;
-  color: #666;
+  color: var(--color-muted);
 }
 
 .site-footer nav {
@@ -134,10 +170,29 @@ body {
 
 .site-footer a {
   margin: 0 8px;
-  color: #000;
+  color: var(--color-black);
   text-decoration: none;
 }
 
 .site-footer a:hover {
-  color: #666666;
+  color: var(--color-red);
+}
+
+@media (max-width: 520px) {
+  .chatbox {
+    margin: 22px 0;
+    padding: 14px;
+  }
+
+  .chat-window {
+    min-height: 320px;
+    padding: 16px;
+  }
+
+  .site-footer nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px 0;
+  }
 }

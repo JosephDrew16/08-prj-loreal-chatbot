@@ -9,6 +9,26 @@ L’Oréal is exploring the power of AI, and your job is to showcase what's poss
 
 ## ☁️ Cloudflare Note
 
-When deploying through Cloudflare, make sure your API request body (in `script.js`) includes a `messages` array and handle the response by extracting `data.choices[0].message.content`.
+The chatbot sends messages to a Cloudflare Worker. Never put an OpenAI API key in
+`script.js`, `secrets.js`, or any other project file. The key belongs only in
+Cloudflare:
+
+1. Create a Worker in the Cloudflare dashboard and paste in
+   `RESOURCE_cloudflare-worker.js`.
+2. In the Worker settings, add an encrypted secret named `OPENAI_API_KEY`.
+3. Deploy the Worker and copy its `workers.dev` URL.
+4. Replace the example URL in `script.js` (`workerUrl`) with your deployed URL.
+5. Open the page, ask a beauty-related question, and confirm the assistant replies.
+
+The browser sends a `messages` array and reads the reply from
+`data.choices[0].message.content`. Conversation history is kept in the current
+page session.
 
 Enjoy building your L’Oréal beauty assistant! 💄
+
+## Typography reference
+
+The [Monotype L’Oréal font case study](https://hello.monotype.com/rs/800-DWE-978/images/BrandReview_LOREAL.pdf)
+describes L’Oréal’s 2020 web pairing of Helvetica Now Display and Halesworth
+eText. These are licensed typefaces, so this project uses their names in the
+font stacks with common system fallbacks rather than distributing font files.

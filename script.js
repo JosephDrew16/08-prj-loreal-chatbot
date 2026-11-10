@@ -1,4 +1,4 @@
-const workerUrl = "https://08-prj-loreal-chatbot.jwdrew.workers.dev/";
+const workerUrl = "https://08-prj-loreal-chatbot.loreal-bot-asu.workers.dev/";
 
 // Keep the conversation so the assistant can use earlier messages as context.
 const conversation = [];

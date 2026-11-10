@@ -9,20 +9,27 @@ L’Oréal is exploring the power of AI, and your job is to showcase what's poss
 
 ## ☁️ Cloudflare Note
 
-The chatbot sends messages to a Cloudflare Worker. Never put an OpenAI API key in
-`script.js`, `secrets.js`, or any other project file. The key belongs only in
-Cloudflare:
+The chatbot calls the OpenAI API through a Cloudflare Worker. Never put an API
+key in `script.js` or any other project file; store it as an encrypted Worker
+secret.
 
-1. Create a Worker in the Cloudflare dashboard and paste in
-   `RESOURCE_cloudflare-worker.js`.
-2. In the Worker settings, add an encrypted secret named `OPENAI_API_KEY`.
-3. Deploy the Worker and copy its `workers.dev` URL.
-4. Replace the example URL in `script.js` (`workerUrl`) with your deployed URL.
-5. Open the page, ask a beauty-related question, and confirm the assistant replies.
+To deploy the Worker from this repository with Wrangler:
+
+1. Log in to Wrangler using the Cloudflare account that owns the Worker.
+2. From the repository folder, set the secret once (or again if it has changed):
+   `wrangler secret put OPENAI_API_KEY`
+3. Deploy the Worker from this repository: `wrangler deploy`.
+   The [wrangler.toml](./wrangler.toml) config deploys
+   `RESOURCE_cloudflare-worker.js` as the `08-prj-loreal-chatbot` Worker.
+4. Keep `workerUrl` in `script.js` set to the deployed Worker URL. The frontend
+   and Worker are separate deployments; deploying the website does not deploy
+   the Worker.
 
 The browser sends a `messages` array and reads the reply from
 `data.choices[0].message.content`. Conversation history is kept in the current
 page session.
+
+Never commit the API key or place it in `wrangler.toml`.
 
 Enjoy building your L’Oréal beauty assistant! 💄
 

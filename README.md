@@ -29,6 +29,11 @@ The browser sends a `messages` array and reads the reply from
 `data.choices[0].message.content`. Conversation history is kept in the current
 page session.
 
+If the chat reports an HTTP 500, read the detail shown after the status. If it
+says `Worker secret OPENAI_API_KEY is not configured`, set the secret while
+logged in to the Cloudflare account that owns this Worker, then deploy again:
+`wrangler secret put OPENAI_API_KEY` followed by `wrangler deploy`.
+
 Never commit the API key or place it in `wrangler.toml`.
 
 Enjoy building your L’Oréal beauty assistant! 💄

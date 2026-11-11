@@ -73,12 +73,32 @@ chatForm.addEventListener("submit", async (e) => {
       }),
     });
 
-    if (!response.ok) {
-      throw new Error(`The Cloudflare Worker returned HTTP ${response.status}.`);
+    const responseText = await response.text();
+    let data;
+
+    try {
+      data = JSON.parse(responseText);
+    } catch {
+      if (!response.ok) {
+        const detail = responseText.trim();
+        throw new Error(
+          `The Cloudflare Worker returned HTTP ${response.status}${detail ? `: ${detail.slice(0, 300)}` : "."}`,
+        );
+      }
+
+      throw new Error("The Cloudflare Worker returned an unexpected response.");
     }
 
-    const data = await response.json();
-    const reply = data.choices?.[0]?.message?.content;
+    if (!response.ok) {
+      const error = data?.error;
+      const detail =
+        typeof error === "string" ? error : error?.message || data?.message;
+      throw new Error(
+        `The Cloudflare Worker returned HTTP ${response.status}${detail ? `: ${String(detail).slice(0, 300)}` : "."}`,
+      );
+    }
+
+    const reply = data?.choices?.[0]?.message?.content;
     if (typeof reply !== "string" || !reply.trim()) {
       throw new Error("The Cloudflare Worker returned an unexpected response.");
     }
